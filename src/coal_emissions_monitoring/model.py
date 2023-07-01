@@ -150,7 +150,7 @@ class CoalEmissionsModel(LightningModule):
         x, y = x.float().to(self.device), y.float().to(self.device)
         # forward pass (calculate predictions)
         y_pred = self(x)
-        y_pred = y_pred.unsqueeze(1) if self.model_name == "UNet" else y_pred
+        y = torch.unsqueeze(y, 1) if self.model_name == "UNet" else y
         # calculate metrics for the current batch
         metrics = self.calculate_all_metrics(preds=y_pred, targets=y)
         metrics = {
