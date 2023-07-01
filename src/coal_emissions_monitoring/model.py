@@ -149,7 +149,7 @@ class CoalEmissionsModel(LightningModule):
         x, y = batch["image"], batch["target"]
         x, y = x.float().to(self.device), y.float().to(self.device)
         # forward pass (calculate predictions)
-        y = y.unsqueeze(1) if self.model_name == "UNet" else y
+        y = y.unsqueeze(1)
         self.log(y)
         self.log(y.shape)
         y_pred = self(x)
