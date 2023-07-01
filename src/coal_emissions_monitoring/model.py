@@ -88,7 +88,7 @@ class CoalEmissionsModel(LightningModule):
         self.loss = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(self.pos_weight))
 
     def forward(self, x):
-        if self.model_name != "UNet":
+        if self.model_name == "UNet":
             preds = self.model(x)
         else:
             preds = self.model(x).squeeze(-1)
