@@ -149,6 +149,7 @@ class CoalEmissionsModel(LightningModule):
         x, y = batch["image"], batch["target"]
         x, y = x.float().to(self.device), y.float().to(self.device)
         # forward pass (calculate predictions)
+        y = y.unsqueeze(1) if self.model_name == "UNet" else y
         y_pred = self(x)
         # calculate metrics for the current batch
         metrics = self.calculate_all_metrics(preds=y_pred, targets=y)
