@@ -76,17 +76,22 @@ class CoalEmissionsModel(LightningModule):
     def __init__(
         self,
         model: torch.nn.Module,
+        model_name: str,
         learning_rate: float = 1e-3,
         pos_weight: float = 1.0,
     ):
         super().__init__()
         self.model = model
+        self.model_name = model_name
         self.learning_rate = learning_rate
         self.pos_weight = pos_weight
         self.loss = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(self.pos_weight))
 
     def forward(self, x):
-        preds = self.model(x).squeeze(-1)
+        if self.model_name != "UNet":
+            preds = self.model(x)
+        else:
+            preds = self.model(x).squeeze(-1)
         return preds
 
     def calculate_all_metrics(
